@@ -58,7 +58,7 @@ export FORCE_AUTOCONF_2_5=1
 rm -f config/missing
 %{__libtoolize}
 aclocal-1.4 -I aux
-autoconf-2.5x
+autoconf
 automake-1.4
 %configure --enable-tclshrl --enable-wishrl
 make
