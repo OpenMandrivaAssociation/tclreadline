@@ -21,7 +21,7 @@ Patch0:  %{name}-interp-paths.patch
 Patch1:	 %{name}-amd64.patch
 License: BSD
 Group: Development/Other
-BuildRequires: readline-devel ncurses-devel tcl X11-devel XFree86-libs
+BuildRequires: readline-devel ncurses-devel tcl X11-devel
 BuildRequires: tk tk-devel tcl tcl-devel
 BuildRequires:  autoconf2.5
 BuildRequires:  automake1.4
