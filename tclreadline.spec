@@ -1,50 +1,49 @@
+%define major		2.1.0
+%define libname		%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
 
-%define name tclreadline
-%define version 2.1.0
+Summary:	Tcl/Tk readline enhanced shells
+Name:		tclreadline
+Version:	2.1.0
+Release:	%mkrel 11
+URL:		http://tclreadline.sourceforge.net
+Source0:	ftp://tclreadline.sourceforge.net/pub/tclreadline/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-interp-paths.patch
+Patch1:		%{name}-amd64.patch
+License:	BSD
+Group:		Development/Other
+BuildRequires:	readline-devel
+BuildRequires:	ncurses-devel
+BuildRequires:	X11-devel
+BuildRequires:	tk
+BuildRequires:	tk-devel
+BuildRequires:	tcl
+BuildRequires:	tcl-devel
+BuildRequires:	autoconf
+BuildRequires:	automake1.4
 
-%define rel 10
-
-%{?!mkrel:%define mkrel(c:) %{-c: 0.%{-c*}.}%{!?_with_unstable:%(perl -e '$_="%{1}";m/(.\*\\D\+)?(\\d+)$/;$rel=${2}-1;re;print "$1$rel";').%{?subrel:%subrel}%{!?subrel:1}.%{?distversion:%distversion}%{?!distversion:%(echo $[%{mdkversion}/10])}}%{?_with_unstable:%{1}}%{?distsuffix:%distsuffix}%{?!distsuffix:mdk}}
-
-%define release %mkrel %rel
-
-%define major 2.1.0
-%define libname %mklibname %{name} %major
-
-Summary: Tcl/Tk readline enhanced shells
-Name: %{name}
-Version: %{version}
-Release: %{release}
-URL: http://tclreadline.sourceforge.net
-Source0: ftp://tclreadline.sourceforge.net/pub/tclreadline/%{name}-%{version}.tar.bz2
-Patch0:  %{name}-interp-paths.patch
-Patch1:	 %{name}-amd64.patch
-License: BSD
-Group: Development/Other
-BuildRequires: readline-devel ncurses-devel tcl X11-devel
-BuildRequires: tk tk-devel tcl tcl-devel
-BuildRequires:  autoconf2.5
-BuildRequires:  automake1.4
+%description
+This package contains tclreadline library, which builds a connection
+between tcl and the gnu readline.
 
 %package -n %{libname}
 Group: System/Libraries
 Summary: GNU readline for TCL
 Provides: lib%{name} = %{version}
 
-%package -n %{libname}-devel
-Group: Development/C
-Summary: Development headers and libraries
-Requires: %{libname} = %{version}
-Provides: lib%{name}-devel = %{version}
-
-%description
-Tclshrl and wishrl is readline enhanced replacement for tclsh and wish
-
 %description -n %{libname}
 This package contains tclreadline library, which builds a connection
 between tcl and the gnu readline.
 
-%description -n %{libname}-devel
+%package -n %{develname}
+Group:		Development/C
+Summary:	Development headers and libraries
+Requires:	%{libname} = %{version}
+Provides:	lib%{name}-devel = %{version}
+Provides:	%{name}-devel = %{version}
+Obsoletes:	%{mklibname tclreadline 2.1.0 -d}
+
+%description -n %{develname}
 Development headers and libraries for tclreadline
  
 %prep
@@ -53,30 +52,27 @@ Development headers and libraries for tclreadline
 %patch1 -p1
 
 %build
-export FORCE_AUTOCONF_2_5=1
 rm -f config/missing
-%{__libtoolize}
-aclocal-1.4 -I aux
-autoconf
-automake-1.4
+%{__libtoolize} --force
+autoreconf -i -I aux
 %configure --enable-tclshrl --enable-wishrl
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/tclreadline.h
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/tclreadline%major/{tclreadlineSetup.tcl,tclreadlineInit.tcl,pkgIndex.tcl}
-chmod 644 $RPM_BUILD_ROOT%{_libdir}/*.la
+%multiarch_includes %{buildroot}%{_includedir}/tclreadline.h
+chmod 755 %{buildroot}%{_libdir}/tclreadline%{major}/{tclreadlineSetup.tcl,tclreadlineInit.tcl,pkgIndex.tcl}
+chmod 644 %{buildroot}%{_libdir}/*.la
 
-ln -sf libtclreadline-%{major}.so $RPM_BUILD_ROOT%{_libdir}/libtclreadline.so.%major
+ln -sf libtclreadline-%{major}.so %{buildroot}%{_libdir}/libtclreadline.so.%{major}
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %doc AUTHORS COPYING ChangeLog README TODO
@@ -84,11 +80,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/wishrl
 
 %files -n %{libname}
-%{_libdir}/tclreadline%major
-%{_libdir}/libtclreadline-%major.so
+%{_libdir}/tclreadline%{major}
+%{_libdir}/libtclreadline-%{major}.so
 %{_libdir}/libtclreadline.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %multiarch %{multiarch_includedir}/tclreadline.h
 %{_includedir}/tclreadline.h
 %{_libdir}/libtclreadline.a 
