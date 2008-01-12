@@ -20,7 +20,6 @@ BuildRequires:	tk-devel
 BuildRequires:	tcl
 BuildRequires:	tcl-devel
 BuildRequires:	autoconf
-BuildRequires:	automake1.4
 
 %description
 This package contains tclreadline library, which builds a connection
