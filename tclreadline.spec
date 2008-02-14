@@ -12,6 +12,7 @@ Patch0:		%{name}-interp-paths.patch
 Patch1:		%{name}-amd64.patch
 License:	BSD
 Group:		Development/Other
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	readline-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	X11-devel
