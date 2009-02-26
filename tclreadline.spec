@@ -3,10 +3,9 @@
 Summary:	Tcl/Tk readline enhanced shells
 Name:		tclreadline
 Version:	2.1.0
-Release:	%mkrel 16
+Release:	%mkrel 17
 URL:		http://tclreadline.sourceforge.net
 Source0:	ftp://tclreadline.sourceforge.net/pub/tclreadline/%{name}-%{version}.tar.bz2
-Patch0:		%{name}-interp-paths.patch
 Patch1:		%{name}-amd64.patch
 # upstream assumes tkConfig.sh and tclConfig.sh are always in the same
 # directory, which isn't the case for us now - AdamW 2008/10
@@ -35,10 +34,15 @@ connection between TCL and the GNU readline.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 %patch2 -p1
+%patch1 -p1
 %patch3 -p1
+
+# fix interpreter path
+perl -pi -e 's|^#!/usr/local/bin/tclsh|#!/usr/bin/tclsh|' \
+    tclreadlineInit.tcl.in \
+    tclreadlineSetup.tcl.in \
+    pkgIndex.tcl.in
 
 %build
 rm -f config/missing
@@ -56,6 +60,7 @@ rm -rf %{buildroot}
 rm -f %{buildroot}%{tcl_sitearch}/%{name}%{version}/*.*a
 rm -rf %{buildroot}%{_includedir}
 
+
 %clean
 rm -rf %{buildroot}
 
@@ -65,4 +70,3 @@ rm -rf %{buildroot}
 %{_bindir}/wishrl
 %{tcl_sitearch}/%{name}%{version}
 %{_mandir}/mann/tclreadline.n.*
-
