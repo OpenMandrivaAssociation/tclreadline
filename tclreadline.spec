@@ -46,8 +46,7 @@ perl -pi -e 's|^#!/usr/local/bin/tclsh|#!/usr/bin/tclsh|' \
 
 %build
 rm -f config/missing
-%{__libtoolize} --force
-autoreconf -i -I aux
+autoreconf -i --force -I aux
 %configure2_5x --enable-tclshrl --enable-wishrl --libdir=%{tcl_sitearch}/%{name}%{version}
 make
 
