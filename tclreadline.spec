@@ -3,7 +3,7 @@
 Summary:	Tcl/Tk readline enhanced shells
 Name:		tclreadline
 Version:	2.1.0
-Release:	%mkrel 17
+Release:	%mkrel 18
 URL:		http://tclreadline.sourceforge.net
 Source0:	ftp://tclreadline.sourceforge.net/pub/tclreadline/%{name}-%{version}.tar.bz2
 Patch1:		%{name}-amd64.patch
