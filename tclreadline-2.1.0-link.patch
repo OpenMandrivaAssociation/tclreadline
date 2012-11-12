@@ -1,0 +1,22 @@
+--- Makefile.am.link	2011-02-01 12:20:37.000000000 +0100
++++ Makefile.am	2011-02-01 12:21:05.000000000 +0100
+@@ -21,7 +21,7 @@
+ 
+ ## libtclreadline_la_LIBADD = $(LIBS)
+ libtclreadline_la_LDFLAGS = -release $(MAJOR).$(MINOR).$(PATCHLEVEL)
+-
++libtclreadline_la_LIBADD = $(TCL_LIB_SPEC) 
+ tclrldir = @TCLRL_DIR@
+ tclrl_SCRIPTS = pkgIndex.tcl tclreadlineCompleter.tcl tclreadlineInit.tcl tclreadlineSetup.tcl
+ INSTALL_SCRIPT = ${INSTALL_DATA}
+--- Makefile.in.link	2011-02-01 12:21:12.000000000 +0100
++++ Makefile.in	2011-02-01 12:21:44.000000000 +0100
+@@ -122,7 +122,7 @@
+ CPPFLAGS = @CPPFLAGS@
+ LDFLAGS = @LDFLAGS@
+ LIBS = @LIBS@
+-libtclreadline_la_LIBADD = 
++libtclreadline_la_LIBADD = $(TCL_LIB_SPEC)
+ libtclreadline_la_OBJECTS =  tclreadline.lo
+ @STATIC_WISHRL_TRUE@@STATIC_TCLSHRL_FALSE@bin_PROGRAMS =  \
+ @STATIC_WISHRL_TRUE@@STATIC_TCLSHRL_FALSE@wishrl$(EXEEXT)

@@ -1,0 +1,14 @@
+--- tclreadline-2.1.0/configure.in	2000-12-07 16:45:45.000000000 -0800
++++ tclreadline-2.1.0/configure.in.new	2008-10-25 14:12:58.000000000 -0700
+@@ -89,9 +89,9 @@
+ if test "${prefix}" = "NONE"; then
+     prefix=$TCL_PREFIX
+ fi
+-TCLRL_LIBDIR="${prefix}/lib"
++TCLRL_LIBDIR="${libdir}"
+ AC_SUBST(TCLRL_LIBDIR)
+-TCLRL_DIR="${TCLRL_LIBDIR}/tclreadline$VERSION"
++TCLRL_DIR="${TCLRL_LIBDIR}"
+ AC_SUBST(TCLRL_DIR)
+ 
+ # HEADERS
