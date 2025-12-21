@@ -16,6 +16,10 @@ Patch3:		tclreadline-2.1.0-tcl_relocate.patch
 License:	BSD
 Group:		Development/Other
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	readline-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	tk
